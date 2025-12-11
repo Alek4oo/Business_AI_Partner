@@ -26,17 +26,48 @@ import {
     CheckSquare,
     Sparkles,
     ArrowRight,
-    Maximize2
+    Maximize2,
+    LogOut,
+    Settings,
+    User,
+    ChevronDown
 } from 'lucide-react';
+
+import ProfileSettings from './ProfileSettings';
+import SettingsModal from './SettingsModal';
 
 interface DashboardProps {
     activeSection: Section;
     userProfile: UserProfile;
+    onLogout: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile }) => {
+const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLogout }) => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<Record<string, any>>({});
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [activeModal, setActiveModal] = useState<'profile' | 'settings' | null>(null);
+    const profileRef = useRef<HTMLDivElement>(null);
+
+    // Close profile dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+                setIsProfileOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // Update local profile state
+    const handleProfileUpdate = (updatedProfile: UserProfile) => {
+        // In a real app, this would update parent state or context
+        // For now we just refresh the section if needed
+        console.log('Profile updated:', updatedProfile);
+    };
 
     // Chat State
     const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -320,8 +351,8 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile }) => 
                             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div
                                     className={`max-w-[80%] p-4 rounded-2xl shadow-lg backdrop-blur-sm ${msg.role === 'user'
-                                            ? 'bg-amber-500 text-black font-medium rounded-br-none shadow-amber-500/10'
-                                            : 'bg-slate-800/60 text-slate-200 rounded-bl-none border border-white/10'
+                                        ? 'bg-amber-500 text-black font-medium rounded-br-none shadow-amber-500/10'
+                                        : 'bg-slate-800/60 text-slate-200 rounded-bl-none border border-white/10'
                                         }`}
                                 >
                                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
@@ -423,8 +454,8 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile }) => 
                                         key={task.id}
                                         onClick={() => toggleTask(task.id)}
                                         className={`p-5 rounded-xl border transition-all cursor-pointer group flex items-start gap-4 relative overflow-hidden ${task.isCompleted
-                                                ? 'bg-emerald-900/5 border-emerald-900/20 opacity-50'
-                                                : 'glass-panel hover:border-amber-400/30'
+                                            ? 'bg-emerald-900/5 border-emerald-900/20 opacity-50'
+                                            : 'glass-panel hover:border-amber-400/30'
                                             }`}
                                     >
                                         <div className={`mt-1 w-6 h-6 rounded-md border flex items-center justify-center transition-colors shadow-inner ${task.isCompleted ? 'bg-emerald-500 border-emerald-400 text-black' : 'bg-slate-900 border-slate-700 text-transparent group-hover:border-amber-400'
@@ -615,7 +646,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile }) => 
 
     return (
         <div className="p-4 md:p-8 max-w-7xl mx-auto pb-4 pt-6">
-            <header className="mb-10 lg:flex items-center justify-between hidden">
+            <header className="mb-10 lg:flex items-center justify-between hidden z-10 relative">
                 <div>
                     <h1 className="text-2xl font-bold text-white tracking-tight">
                         Преглед на Проекта
@@ -627,12 +658,67 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile }) => 
                         <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                         System Stable
                     </div>
-                    <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-[0_0_15px_rgba(251,191,36,0.3)]">
-                        {userProfile.name.charAt(0)}
+
+                    {/* Profile Dropdown */}
+                    <div className="relative" ref={profileRef}>
+                        <button
+                            onClick={() => setIsProfileOpen(!isProfileOpen)}
+                            className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:scale-105 transition-transform cursor-pointer"
+                        >
+                            {userProfile.name.charAt(0)}
+                        </button>
+
+                        {isProfileOpen && (
+                            <div className="absolute right-0 mt-3 w-56 glass-panel rounded-xl shadow-2xl border border-white/10 overflow-hidden animate-fadeIn backdrop-blur-xl z-50">
+                                <div className="p-4 border-b border-white/5">
+                                    <p className="text-sm font-bold text-white truncate">{userProfile.name}</p>
+                                    <p className="text-xs text-slate-400 truncate">{userProfile.email}</p>
+                                </div>
+                                <div className="p-2 space-y-1">
+                                    <button
+                                        onClick={() => { setIsProfileOpen(false); setActiveModal('profile'); }}
+                                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left group"
+                                    >
+                                        <User size={16} className="text-slate-400 group-hover:text-amber-400 transition-colors" />
+                                        Профил
+                                    </button>
+                                    <button
+                                        onClick={() => { setIsProfileOpen(false); setActiveModal('settings'); }}
+                                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left group"
+                                    >
+                                        <Settings size={16} className="text-slate-400 group-hover:text-amber-400 transition-colors" />
+                                        Настройки
+                                    </button>
+                                </div>
+                                <div className="p-2 border-t border-white/5">
+                                    <button
+                                        onClick={onLogout}
+                                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors text-left"
+                                    >
+                                        <LogOut size={16} />
+                                        Изход
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </header>
             {renderSection()}
+
+            {/* Modals */}
+            {activeModal === 'profile' && (
+                <ProfileSettings
+                    userProfile={userProfile}
+                    onClose={() => setActiveModal(null)}
+                    onUpdate={handleProfileUpdate}
+                />
+            )}
+            {activeModal === 'settings' && (
+                <SettingsModal
+                    onClose={() => setActiveModal(null)}
+                />
+            )}
         </div>
     );
 };

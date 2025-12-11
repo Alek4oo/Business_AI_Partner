@@ -20,14 +20,27 @@ const App: React.FC = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Check for existing token on mount
+  // Check for existing token and settings on mount
   React.useEffect(() => {
     const checkAuth = async () => {
       const { api } = await import('./services/api');
-      const profile = await api.getProfile();
+      const [profile, settings] = await Promise.all([
+        api.getProfile(),
+        api.getSettings() // Fetch settings in parallel
+      ]);
+
       if (profile) {
         setUserProfile(profile);
         setCurrentView('dashboard');
+      }
+
+      // Apply saved theme
+      if (settings) {
+        if (settings.darkMode) {
+          document.body.classList.remove('light-mode');
+        } else {
+          document.body.classList.add('light-mode');
+        }
       }
     };
     checkAuth();
@@ -102,6 +115,7 @@ const App: React.FC = () => {
           <Dashboard
             activeSection={activeSection}
             userProfile={userProfile}
+            onLogout={handleLogout}
           />
         </main>
       </div>

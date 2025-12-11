@@ -16,6 +16,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   profile   UserProfile?
+  settings  Settings?
   savedData SavedData[]
 }
 
@@ -37,4 +38,14 @@ model SavedData {
   type      String   // e.g., "FINANCIAL_PLAN", "MARKETING_STRATEGY"
   content   String   // JSON string or text content
   createdAt DateTime @default(now())
+}
+
+model Settings {
+  id            Int     @id @default(autoincrement())
+  userId        Int     @unique
+  user          User    @relation(fields: [userId], references: [id])
+  darkMode      Boolean @default(true)
+  notifications Boolean @default(true)
+  publicProfile Boolean @default(false)
+  twoFactor     Boolean @default(false)
 }
