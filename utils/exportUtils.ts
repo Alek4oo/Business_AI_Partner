@@ -4,23 +4,48 @@ export const exportToPDF = async (elementId: string, filename: string) => {
     const element = document.getElementById(elementId);
     if (!element) {
         console.error('Element not found for PDF export');
-        return;
+        return false;
     }
 
+    // Get computed styles from the original element
+    const computedStyles = window.getComputedStyle(element);
+
+    // Clone and prepare the element
+    const clone = element.cloneNode(true) as HTMLElement;
+
+    // Remove action buttons from clone
+    const actionButtons = clone.querySelectorAll('[title="Download as PDF"], [title="Print"], [title="Share"], [title="Regenerate"]');
+    actionButtons.forEach(btn => btn.parentElement?.remove());
+
+    // Simple styling - preserve dark theme
+    clone.style.backgroundColor = '#0f172a';
+    clone.style.color = '#e2e8f0';
+    clone.style.padding = '20px';
+    clone.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+    clone.style.fontSize = '14px';
+    clone.style.lineHeight = '1.6';
+
     const opt = {
-        margin: [10, 10, 10, 10] as [number, number, number, number],
+        margin: [15, 15, 15, 15] as [number, number, number, number], // top, left, bottom, right in mm
         filename: `${filename}.pdf`,
-        image: { type: 'jpeg' as const, quality: 0.98 },
+        image: { type: 'jpeg' as const, quality: 0.92 },
         html2canvas: {
-            scale: 2,
+            scale: 1.5,
             useCORS: true,
-            backgroundColor: '#0f172a' // slate-900 background
+            backgroundColor: '#0f172a',
+            scrollX: 0,
+            scrollY: 0,
         },
-        jsPDF: { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const }
+        jsPDF: {
+            unit: 'mm' as const,
+            format: 'a4' as const,
+            orientation: 'portrait' as const
+        },
+        pagebreak: { mode: 'avoid-all' as const }
     };
 
     try {
-        await html2pdf().set(opt).from(element).save();
+        await html2pdf().set(opt).from(clone).save();
         return true;
     } catch (error) {
         console.error('PDF export failed:', error);
