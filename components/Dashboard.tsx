@@ -181,8 +181,8 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
         const runway = Math.max(0, Math.floor(userProfile.capital / monthlyBurn));
 
         let baseScore = 60;
-        if (userProfile.experience === 'Експерт') baseScore += 25;
-        if (userProfile.experience === 'Средно ниво') baseScore += 10;
+        if (userProfile.experience === 'Expert') baseScore += 25;
+        if (userProfile.experience === 'Intermediate') baseScore += 10;
         if (runway > 6) baseScore += 10;
         if (userProfile.capital > 10000) baseScore += 5;
         const viabilityScore = Math.min(99, baseScore);
@@ -194,10 +194,10 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
         if (activeSection === Section.DASHBOARD) {
             const stats = calculateStats();
             const quotes = [
-                "Големите неща никога не идват от зони на комфорт.",
-                "Не чакай възможността. Създай я.",
-                "Успехът е сумата от малки усилия, повтаряни ден след ден.",
-                "Провалът е само възможност да започнеш отново, по-умно."
+                "Great things never come from comfort zones.",
+                "Don't wait for opportunity. Create it.",
+                "Success is the sum of small efforts, repeated day after day.",
+                "Failure is just an opportunity to start again, smarter."
             ];
             const dailyQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
@@ -209,10 +209,10 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
 
                         <div className="relative z-10">
                             <h2 className="text-4xl font-bold mb-3 text-white tracking-tight">
-                                Здравейте, <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">{userProfile.name}</span>
+                                Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">{userProfile.name}</span>
                             </h2>
                             <p className="text-lg text-slate-300 max-w-2xl font-light">
-                                Вашият бизнес <span className="font-semibold text-amber-300">"{userProfile.businessIdea}"</span> е готов за следващото ниво.
+                                Your business <span className="font-semibold text-amber-300">"{userProfile.businessIdea}"</span> is ready for the next level.
                             </p>
                         </div>
                     </div>
@@ -231,7 +231,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                     {/* Stats Grid */}
                     <div className="flex items-center gap-3 mb-6">
                         <Activity size={20} className="text-amber-400" />
-                        <h3 className="text-white font-bold text-lg tracking-wide">Ключови Показатели</h3>
+                        <h3 className="text-white font-bold text-lg tracking-wide">Key Indicators</h3>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -240,9 +240,9 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <div className="absolute top-6 right-6 p-2 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg text-amber-400 shadow-lg group-hover:scale-110 transition-transform">
                                 <Wallet size={20} />
                             </div>
-                            <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">Капитал</span>
+                            <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">Capital</span>
                             <p className="text-3xl font-bold text-white mb-1 group-hover:text-glow transition-all">
-                                {userProfile.capital.toLocaleString()} <span className="text-lg text-slate-500 font-normal">лв.</span>
+                                {userProfile.capital.toLocaleString()} <span className="text-lg text-slate-500 font-normal">BGN</span>
                             </p>
                             <div className="w-full bg-slate-800/50 h-1.5 rounded-full mt-4 overflow-hidden">
                                 <div className="h-full bg-gradient-to-r from-amber-600 to-amber-400 w-3/4 rounded-full"></div>
@@ -257,7 +257,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">Runway</span>
                             <div className="flex items-baseline gap-2">
                                 <p className="text-3xl font-bold text-white mb-1 group-hover:text-glow transition-all">{stats.runway}</p>
-                                <span className="text-sm text-slate-500 font-medium">месеца</span>
+                                <span className="text-sm text-slate-500 font-medium">months</span>
                             </div>
                             <div className="w-full bg-slate-800/50 h-1.5 rounded-full mt-4 overflow-hidden">
                                 <div className="h-full bg-emerald-500 w-1/2 rounded-full"></div>
@@ -269,7 +269,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <div className="absolute top-6 right-6 p-2 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg text-indigo-400 shadow-lg group-hover:scale-110 transition-transform">
                                 <PieChart size={20} />
                             </div>
-                            <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">AI Оценка</span>
+                            <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">AI Score</span>
                             <div className="flex items-center gap-3">
                                 <p className="text-3xl font-bold text-white group-hover:text-glow transition-all">{stats.viabilityScore}%</p>
                                 <div className="flex px-2 py-0.5 bg-indigo-500/20 rounded text-indigo-300 text-xs font-bold border border-indigo-500/30">
@@ -288,7 +288,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             </div>
                             <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">Burn Rate</span>
                             <p className="text-2xl font-bold text-white mb-1 group-hover:text-glow transition-all">
-                                ~{stats.monthlyBurn.toLocaleString()} <span className="text-sm text-slate-500 font-normal">лв./мес</span>
+                                ~{stats.monthlyBurn.toLocaleString()} <span className="text-sm text-slate-500 font-normal">BGN/mo</span>
                             </p>
                         </div>
 
@@ -297,9 +297,9 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <div className="absolute top-6 right-6 p-2 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg text-slate-300 shadow-lg group-hover:scale-110 transition-transform">
                                 <Users size={20} />
                             </div>
-                            <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">Екип</span>
+                            <span className="inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 bg-slate-800/50 px-2 py-1 rounded">Team</span>
                             <p className="text-3xl font-bold text-white mb-1 group-hover:text-glow transition-all">
-                                {userProfile.teamSize} <span className="text-lg text-slate-500 font-normal">души</span>
+                                {userProfile.teamSize} <span className="text-lg text-slate-500 font-normal">people</span>
                             </p>
                         </div>
 
@@ -330,7 +330,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <MessageCircle size={20} className="text-amber-400" />
                         </div>
                         <div>
-                            <h3 className="text-white font-bold tracking-wide">AI Бизнес Ментор</h3>
+                            <h3 className="text-white font-bold tracking-wide">AI Business Mentor</h3>
                             <p className="text-slate-400 text-xs flex items-center gap-1.5">
                                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
                                 Online
@@ -344,7 +344,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                 <div className="w-24 h-24 bg-gradient-to-tr from-amber-400/20 to-transparent rounded-full flex items-center justify-center mb-6 animate-pulse">
                                     <Sparkles size={40} className="text-amber-400" />
                                 </div>
-                                <p className="text-lg font-medium">Задайте въпрос за вашия бизнес</p>
+                                <p className="text-lg font-medium">Ask a question about your business</p>
                             </div>
                         )}
                         {chatHistory.map((msg, idx) => (
@@ -380,7 +380,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                 value={chatInput}
                                 onChange={(e) => setChatInput(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                                placeholder="Напишете съобщение..."
+                                placeholder="Type a message..."
                                 className="flex-1 p-3 bg-transparent text-white placeholder-slate-500 focus:outline-none"
                             />
                             <button
@@ -407,8 +407,8 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <Loader2 size={30} className="text-amber-400 animate-pulse" />
                         </div>
                     </div>
-                    <p className="mt-8 text-xl font-bold text-white tracking-wide">Генериране на стратегия...</p>
-                    <p className="text-sm text-slate-400 mt-2">AI анализира данните ви в реално време</p>
+                    <p className="mt-8 text-xl font-bold text-white tracking-wide">Generating strategy...</p>
+                    <p className="text-sm text-slate-400 mt-2">AI is analyzing your data in real-time</p>
                 </div>
             );
         }
@@ -424,11 +424,11 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                     <div className="flex justify-between items-end mb-6">
                         <div>
                             <h2 className="text-3xl font-bold text-white tracking-tight">Roadmap</h2>
-                            <p className="text-slate-400 mt-2">Стратегически план за действие</p>
+                            <p className="text-slate-400 mt-2">Strategic action plan</p>
                         </div>
                         <div className="text-right">
                             <span className="text-4xl font-bold text-amber-400">{progress}%</span>
-                            <p className="text-xs text-slate-500 uppercase tracking-widest">Завършен</p>
+                            <p className="text-xs text-slate-500 uppercase tracking-widest">Completed</p>
                         </div>
                     </div>
 
@@ -445,7 +445,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                 <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400">
                                     <CheckSquare size={18} />
                                 </div>
-                                <h3 className="font-bold text-white uppercase text-sm tracking-wider">Задачи</h3>
+                                <h3 className="font-bold text-white uppercase text-sm tracking-wider">Tasks</h3>
                             </div>
 
                             <div className="space-y-3">
@@ -464,7 +464,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-1">
-                                                <span className="text-[10px] font-bold text-black bg-amber-400 px-2 py-0.5 rounded shadow-[0_0_10px_rgba(251,191,36,0.3)]">В {task.week}</span>
+                                                <span className="text-[10px] font-bold text-black bg-amber-400 px-2 py-0.5 rounded shadow-[0_0_10px_rgba(251,191,36,0.3)]">Week {task.week}</span>
                                                 <h4 className={`font-bold text-slate-200 ${task.isCompleted ? 'line-through text-slate-500' : 'group-hover:text-amber-100'}`}>{task.title}</h4>
                                             </div>
                                             <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">{task.detail}</p>
@@ -480,7 +480,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                 <div className="p-2 bg-rose-500/10 rounded-lg text-rose-500">
                                     <AlertTriangle size={18} />
                                 </div>
-                                <h3 className="font-bold text-white uppercase text-sm tracking-wider">Рискове</h3>
+                                <h3 className="font-bold text-white uppercase text-sm tracking-wider">Risks</h3>
                             </div>
                             {risks.map((risk, idx) => (
                                 <div key={idx} className="bg-gradient-to-br from-rose-950/30 to-slate-900/50 p-5 rounded-xl border border-rose-900/20 hover:border-rose-800/50 transition-colors">
@@ -502,8 +502,8 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                     <div className="w-24 h-24 bg-slate-800/50 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-white/5">
                         <RefreshCw size={32} className="text-slate-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">Готови за Анализ</h3>
-                    <p className="text-slate-400 mb-8 max-w-md mx-auto">Стартирайте специализиран AI анализ за тази секция, за да получите професионални насоки.</p>
+                    <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">Ready for Analysis</h3>
+                    <p className="text-slate-400 mb-8 max-w-md mx-auto">Start a specialized AI analysis for this section to receive professional guidance.</p>
                     <button
                         onClick={() => fetchDataForSection(activeSection)}
                         className="group relative px-8 py-4 bg-amber-400 text-black font-bold rounded-xl overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)]"
@@ -511,7 +511,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span className="relative flex items-center gap-2">
                             <Sparkles size={18} />
-                            Генерирай Анализ
+                            Generate Analysis
                         </span>
                     </button>
                 </div>
@@ -529,12 +529,12 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                 <div className="p-2 bg-amber-400/10 rounded-lg text-amber-500">
                                     <DollarSign size={20} />
                                 </div>
-                                Финансова Прогноза (6 Месеца)
+                                Financial Forecast (6 Months)
                             </h3>
                             <div className="flex gap-4 text-xs font-semibold text-slate-400 bg-slate-900/50 p-2 rounded-lg border border-white/5">
-                                <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span> Приход</div>
-                                <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-slate-600"></span> Разход</div>
-                                <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)]"></span> Печалба</div>
+                                <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span> Revenue</div>
+                                <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-slate-600"></span> Expenses</div>
+                                <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)]"></span> Profit</div>
                             </div>
                         </div>
 
@@ -577,9 +577,9 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                             color: '#fff'
                                         }}
                                     />
-                                    <Bar dataKey="revenue" name="Приходи" fill="url(#revenueGradient)" radius={[4, 4, 0, 0]} maxBarSize={50} />
-                                    <Bar dataKey="expenses" name="Разходи" fill="#334155" radius={[4, 4, 0, 0]} maxBarSize={50} />
-                                    <Bar dataKey="profit" name="Печалба" fill="url(#profitGradient)" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                                    <Bar dataKey="revenue" name="Revenue" fill="url(#revenueGradient)" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                                    <Bar dataKey="expenses" name="Expenses" fill="#334155" radius={[4, 4, 0, 0]} maxBarSize={50} />
+                                    <Bar dataKey="profit" name="Profit" fill="url(#profitGradient)" radius={[4, 4, 0, 0]} maxBarSize={50} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
@@ -592,7 +592,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                             <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 border border-emerald-500/20">
                                 <CheckCircle size={20} />
                             </div>
-                            AI Финансов Анализ
+                            AI Financial Analysis
                         </h3>
                         <div className="prose prose-invert max-w-none relative z-10 text-slate-300 prose-headings:text-emerald-400">
                             {renderContent(analysis)}
@@ -616,15 +616,15 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                         </div>
                         <div>
                             <h2 className="text-3xl font-bold text-white tracking-tight">
-                                {activeSection === Section.IDEA_VALIDATION && 'Валидация на Идея'}
-                                {activeSection === Section.MARKET_ANALYSIS && 'Пазарен Анализ'}
-                                {activeSection === Section.BUSINESS_PLAN && 'Бизнес План'}
-                                {activeSection === Section.MARKETING && 'Маркетингова Стратегия'}
-                                {activeSection === Section.LEGAL && 'Правни Изисквания'}
+                                {activeSection === Section.IDEA_VALIDATION && 'Idea Validation'}
+                                {activeSection === Section.MARKET_ANALYSIS && 'Market Analysis'}
+                                {activeSection === Section.BUSINESS_PLAN && 'Business Plan'}
+                                {activeSection === Section.MARKETING && 'Marketing Strategy'}
+                                {activeSection === Section.LEGAL && 'Legal Requirements'}
                             </h2>
                             <p className="text-slate-500 text-sm mt-1 flex items-center gap-2">
                                 <Sparkles size={14} className="text-amber-400" />
-                                Генерирано от Gemini 2.5 Flash
+                                Generated by Gemini 2.5 Flash
                             </p>
                         </div>
                     </div>
@@ -632,7 +632,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                     <button
                         onClick={() => fetchDataForSection(activeSection)}
                         className="text-slate-400 hover:text-amber-400 transition p-3 hover:bg-white/5 rounded-xl group border border-transparent hover:border-white/5"
-                        title="Регенерирай"
+                        title="Regenerate"
                     >
                         <RefreshCw size={22} className="group-hover:rotate-180 transition-transform duration-700" />
                     </button>
@@ -649,9 +649,9 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
             <header className="mb-10 lg:flex items-center justify-between hidden z-10 relative">
                 <div>
                     <h1 className="text-2xl font-bold text-white tracking-tight">
-                        Преглед на Проекта
+                        Project Overview
                     </h1>
-                    <p className="text-slate-400 text-sm mt-1">Управлявайте и развивайте вашия бизнес план</p>
+                    <p className="text-slate-400 text-sm mt-1">Manage and develop your business plan</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="bg-slate-900/50 px-4 py-2 rounded-full border border-white/5 text-xs text-slate-400 flex items-center gap-2">
@@ -680,14 +680,14 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                         className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left group"
                                     >
                                         <User size={16} className="text-slate-400 group-hover:text-amber-400 transition-colors" />
-                                        Профил
+                                        Profile
                                     </button>
                                     <button
                                         onClick={() => { setIsProfileOpen(false); setActiveModal('settings'); }}
                                         className="w-full flex items-center gap-3 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-left group"
                                     >
                                         <Settings size={16} className="text-slate-400 group-hover:text-amber-400 transition-colors" />
-                                        Настройки
+                                        Settings
                                     </button>
                                 </div>
                                 <div className="p-2 border-t border-white/5">
@@ -696,7 +696,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                                         className="w-full flex items-center gap-3 px-3 py-2 text-sm text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors text-left"
                                     >
                                         <LogOut size={16} />
-                                        Изход
+                                        Logout
                                     </button>
                                 </div>
                             </div>

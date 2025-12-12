@@ -60,7 +60,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
             if ('Notification' in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === 'granted') {
-                        new Notification("ApexBusiness Известия", { body: "Известията са активирани успешно!" });
+                        new Notification("ApexBusiness Notifications", { body: "Notifications enabled successfully!" });
                     }
                 });
             }
@@ -68,7 +68,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
 
         if (key === 'twoFactor' && newValue === true) {
             // Simulate 2FA setup flow
-            alert("За да завършите настройката на 2FA, моля проверете имейла си за код за потвърждение.");
+            alert("To complete 2FA setup, please check your email for a confirmation code.");
         }
 
         // Persist to Backend
@@ -90,7 +90,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
 
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10 bg-slate-900/40">
-                    <h2 className="text-xl font-bold text-white">Настройки</h2>
+                    <h2 className="text-xl font-bold text-white">Settings</h2>
                     <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full">
                         <X size={20} />
                     </button>
@@ -101,14 +101,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
 
                     {/* Appearance */}
                     <div>
-                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Външен Вид</h3>
+                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Appearance</h3>
 
                         <div className="flex items-center justify-between py-3 border-b border-white/5">
                             <div className="flex items-center gap-3 text-slate-200">
                                 <div className="p-2 bg-slate-800 rounded-lg text-amber-400">
                                     <Moon size={18} />
                                 </div>
-                                <span className="font-medium">Тъмна Тема</span>
+                                <span className="font-medium">Dark Mode</span>
                             </div>
                             <button
                                 onClick={() => toggle('darkMode')}
@@ -121,14 +121,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
 
                     {/* Notifications */}
                     <div>
-                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Известия</h3>
+                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Notifications</h3>
 
                         <div className="flex items-center justify-between py-3 border-b border-white/5">
                             <div className="flex items-center gap-3 text-slate-200">
                                 <div className="p-2 bg-slate-800 rounded-lg text-blue-400">
                                     <Bell size={18} />
                                 </div>
-                                <span className="font-medium">Push Известия</span>
+                                <span className="font-medium">Push Notifications</span>
                             </div>
                             <button
                                 onClick={() => toggle('notifications')}
@@ -141,14 +141,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
 
                     {/* Security */}
                     <div>
-                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Сигурност</h3>
+                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Security</h3>
 
                         <div className="flex items-center justify-between py-3">
                             <div className="flex items-center gap-3 text-slate-200">
                                 <div className="p-2 bg-slate-800 rounded-lg text-rose-400">
                                     <Shield size={18} />
                                 </div>
-                                <span className="font-medium">Двуфакторна Защита</span>
+                                <span className="font-medium">Two-Factor Auth</span>
                             </div>
                             <button
                                 onClick={() => toggle('twoFactor')}
@@ -162,7 +162,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
                 </div>
 
                 <div className="p-6 bg-slate-900/40 text-center">
-                    <p className="text-xs text-slate-500">Версия 1.0.1 &bull; ApexBusiness Ultimate</p>
+                    <p className="text-xs text-slate-500">Version 1.0.1 &bull; ApexBusiness Ultimate</p>
                 </div>
 
             </div>

@@ -24,14 +24,14 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection, onLogout, isOpen, onClose }) => {
   const menuItems = [
-    { id: Section.DASHBOARD, label: 'Начало', icon: LayoutDashboard },
-    { id: Section.MENTOR, label: 'AI Ментор', icon: MessageCircle },
-    { id: Section.IDEA_VALIDATION, label: 'Валидация', icon: Lightbulb },
-    { id: Section.MARKET_ANALYSIS, label: 'Пазар', icon: TrendingUp },
-    { id: Section.BUSINESS_PLAN, label: 'Бизнес План', icon: FileText },
-    { id: Section.FINANCE, label: 'Финанси', icon: DollarSign },
-    { id: Section.MARKETING, label: 'Маркетинг', icon: Megaphone },
-    { id: Section.LEGAL, label: 'Закони', icon: Scale },
+    { id: Section.DASHBOARD, label: 'Home', icon: LayoutDashboard },
+    { id: Section.MENTOR, label: 'AI Mentor', icon: MessageCircle },
+    { id: Section.IDEA_VALIDATION, label: 'Validation', icon: Lightbulb },
+    { id: Section.MARKET_ANALYSIS, label: 'Market', icon: TrendingUp },
+    { id: Section.BUSINESS_PLAN, label: 'Business Plan', icon: FileText },
+    { id: Section.FINANCE, label: 'Finance', icon: DollarSign },
+    { id: Section.MARKETING, label: 'Marketing', icon: Megaphone },
+    { id: Section.LEGAL, label: 'Legal', icon: Scale },
     { id: Section.RISKS, label: 'Roadmap', icon: AlertTriangle },
   ];
 
@@ -108,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection, onLo
             onClick={onLogout}
             className="w-full group flex items-center justify-between px-5 py-3 rounded-xl hover:bg-white/5 transition-all text-slate-400 hover:text-white border border-transparent hover:border-white/5"
           >
-            <span className="text-sm font-medium group-hover:text-amber-400 transition-colors">Изход</span>
+            <span className="text-sm font-medium group-hover:text-amber-400 transition-colors">Logout</span>
             <ArrowRight size={16} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-amber-400" />
           </button>
         </div>

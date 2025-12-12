@@ -30,12 +30,12 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
             const { api } = await import('../services/api');
             await api.updateProfile(formData);
             onUpdate(formData); // Update local state in parent
-            setMessage({ type: 'success', text: 'Профилът е обновен успешно!' });
+            setMessage({ type: 'success', text: 'Profile updated successfully!' });
             setTimeout(() => {
                 onClose();
             }, 1000);
         } catch (error) {
-            setMessage({ type: 'error', text: 'Грешка при обновяване на профила.' });
+            setMessage({ type: 'error', text: 'Error updating profile.' });
         } finally {
             setIsLoading(false);
         }
@@ -49,7 +49,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                 <div className="flex items-center justify-between p-6 border-b border-white/10 bg-slate-900/40">
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
                         <User className="text-amber-400" />
-                        Редактиране на Профил
+                        Edit Profile
                     </h2>
                     <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full">
                         <X size={20} />
@@ -70,13 +70,13 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                         {/* Read Only Identity */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="opacity-70">
-                                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Име</label>
+                                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Name</label>
                                 <div className="glass-card px-4 py-3 rounded-xl text-slate-300 border-white/5 bg-slate-800/50">
                                     {formData.name}
                                 </div>
                             </div>
                             <div className="opacity-70">
-                                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Имейл</label>
+                                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email</label>
                                 <div className="glass-card px-4 py-3 rounded-xl text-slate-300 border-white/5 bg-slate-800/50">
                                     {formData.email}
                                 </div>
@@ -89,7 +89,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                         <div>
                             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                                 <Lightbulb size={14} className="text-amber-400" />
-                                Бизнес Идея
+                                Business Idea
                             </label>
                             <textarea
                                 name="businessIdea"
@@ -104,7 +104,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                             <div>
                                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                                     <DollarSign size={14} className="text-emerald-400" />
-                                    Капитал (BGN)
+                                    Capital (BGN)
                                 </label>
                                 <input
                                     type="number"
@@ -117,7 +117,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                             <div>
                                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                                     <Users size={14} className="text-blue-400" />
-                                    Екип
+                                    Team
                                 </label>
                                 <input
                                     type="number"
@@ -133,7 +133,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                             <div>
                                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                                     <MapPin size={14} className="text-rose-400" />
-                                    Локация
+                                    Location
                                 </label>
                                 <input
                                     type="text"
@@ -146,7 +146,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                             <div>
                                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                                     <Briefcase size={14} className="text-purple-400" />
-                                    Опит
+                                    Experience
                                 </label>
                                 <select
                                     name="experience"
@@ -154,9 +154,9 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                                     onChange={handleChange}
                                     className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-all"
                                 >
-                                    <option value="Начинаещ">Начинаещ</option>
-                                    <option value="Средно ниво">Средно ниво</option>
-                                    <option value="Експерт">Експерт</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Expert">Expert</option>
                                 </select>
                             </div>
                         </div>
@@ -170,7 +170,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                         onClick={onClose}
                         className="px-6 py-2.5 rounded-xl font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm"
                     >
-                        Отказ
+                        Cancel
                     </button>
                     <button
                         onClick={handleSubmit}
@@ -178,7 +178,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userProfile, onClose,
                         className="px-8 py-2.5 rounded-xl font-bold bg-amber-400 hover:bg-amber-500 text-black shadow-lg shadow-amber-400/20 transition-all text-sm flex items-center gap-2"
                     >
                         {isLoading ? <span className="animate-spin">⌛</span> : <Save size={18} />}
-                        Запази
+                        Save
                     </button>
                 </div>
             </div>
