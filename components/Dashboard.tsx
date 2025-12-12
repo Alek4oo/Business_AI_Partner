@@ -142,21 +142,26 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
         if (!chatInput.trim()) return;
 
         const userMsg: ChatMessage = { role: 'user', text: chatInput };
-        setChatHistory(prev => [...prev, userMsg]);
+        const newHistoryWithUser = [...chatHistory, userMsg];
+        setChatHistory(newHistoryWithUser);
         setChatInput('');
         setIsChatLoading(true);
 
+        // Save session immediately with user message
+        const sessionWithUserMsg = updateSessionTitle({ ...currentSession, messages: newHistoryWithUser });
+        setCurrentSession(sessionWithUserMsg);
+        saveChatSession(sessionWithUserMsg);
+
         try {
-            const responseText = await GeminiService.sendMentorMessage(userProfile, chatHistory, userMsg.text);
+            const responseText = await GeminiService.sendMentorMessage(userProfile, newHistoryWithUser, userMsg.text);
             const aiMsg: ChatMessage = { role: 'model', text: responseText };
-            setChatHistory(prev => {
-                const newHistory = [...prev, aiMsg];
-                // Save session after AI responds
-                const updatedSession = updateSessionTitle({ ...currentSession, messages: newHistory });
-                setCurrentSession(updatedSession);
-                saveChatSession(updatedSession);
-                return newHistory;
-            });
+            const finalHistory = [...newHistoryWithUser, aiMsg];
+            setChatHistory(finalHistory);
+
+            // Save session with AI response
+            const finalSession = { ...sessionWithUserMsg, messages: finalHistory, updatedAt: new Date().toISOString() };
+            setCurrentSession(finalSession);
+            saveChatSession(finalSession);
         } catch (e) {
             console.error(e);
         } finally {
