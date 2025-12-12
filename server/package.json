@@ -1,5 +1,5 @@
 {
-    "name": "bizai-server",
+    "name": "apexbusiness-server",
     "version": "1.0.0",
     "description": "Backend for Business AI Partner",
     "main": "src/index.ts",

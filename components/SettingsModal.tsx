@@ -60,7 +60,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
             if ('Notification' in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === 'granted') {
-                        new Notification("BizAI Известия", { body: "Известията са активирани успешно!" });
+                        new Notification("ApexBusiness Известия", { body: "Известията са активирани успешно!" });
                     }
                 });
             }
@@ -162,7 +162,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
                 </div>
 
                 <div className="p-6 bg-slate-900/40 text-center">
-                    <p className="text-xs text-slate-500">Версия 1.0.1 &bull; BizAI Ultimate</p>
+                    <p className="text-xs text-slate-500">Версия 1.0.1 &bull; ApexBusiness Ultimate</p>
                 </div>
 
             </div>

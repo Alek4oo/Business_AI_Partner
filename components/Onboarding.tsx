@@ -334,7 +334,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
             </div>
 
             <footer className="py-6 text-center text-slate-500 text-sm">
-                <p>&copy; 2024 BizAI. Всички права запазени. | <a href="#" className="hover:text-amber-400">Условия</a> | <a href="#" className="hover:text-amber-400">Поверителност</a></p>
+                <p>&copy; 2024 ApexBusiness. Всички права запазени. | <a href="#" className="hover:text-amber-400">Условия</a> | <a href="#" className="hover:text-amber-400">Поверителност</a></p>
             </footer>
         </div>
     );

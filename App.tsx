@@ -108,7 +108,7 @@ const App: React.FC = () => {
               <Menu size={24} />
             </button>
             <h1 className="text-xl font-bold text-white tracking-tight">
-              Biz<span className="text-amber-400">AI</span>
+              Apex<span className="text-amber-400">Business</span>
             </h1>
           </div>
 

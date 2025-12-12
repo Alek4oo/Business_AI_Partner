@@ -53,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, setActiveSection, onLo
           <div className="relative group cursor-default">
             <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-amber-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
             <h1 className="relative text-3xl font-bold text-white tracking-tight">
-              Biz<span className="text-amber-400">AI</span>
+              ApexBusiness<span className="text-amber-400"><br></br>Intelligence</span>
             </h1>
             <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-medium ml-1">Future Of Business</p>
           </div>
