@@ -66,5 +66,32 @@ export const api = {
         });
         if (!response.ok) throw new Error('Failed to update profile');
         return response.json();
+    },
+
+    async getSettings() {
+        const token = this.getToken();
+        if (!token) return null;
+
+        const response = await fetch(`${API_URL}/user/settings`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (!response.ok) return null;
+        return response.json();
+    },
+
+    async updateSettings(data: any) {
+        const token = this.getToken();
+        if (!token) throw new Error('Not authenticated');
+
+        const response = await fetch(`${API_URL}/user/settings`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error('Failed to update settings');
+        return response.json();
     }
 };

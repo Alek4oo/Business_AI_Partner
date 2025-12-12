@@ -19,8 +19,8 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
         email: '',
         businessIdea: '',
         capital: 0,
-        experience: 'Начинаещ',
-        location: 'България',
+        experience: 'Beginner',
+        location: 'Bulgaria',
         teamSize: 1,
     });
 
@@ -82,18 +82,18 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
 
                         <div className="relative z-10">
                             <button onClick={onBack} className="text-slate-400 hover:text-white text-sm font-bold mb-8 flex items-center gap-1 transition-colors">
-                                <ChevronLeft size={16} /> Начало
+                                <ChevronLeft size={16} /> Home
                             </button>
                             <div className="bg-gradient-to-br from-amber-400 to-amber-600 w-16 h-16 rounded-2xl rotate-3 flex items-center justify-center mb-6 shadow-2xl shadow-amber-500/20">
                                 <Rocket size={32} className="text-black -rotate-3" />
                             </div>
-                            <h2 className="text-4xl font-bold mb-2 tracking-tight">Biz<span className="text-amber-400">AI</span></h2>
-                            <p className="text-slate-400 text-lg">Вход към вашето бъдеще.</p>
+                            <h2 className="text-4xl font-bold mb-2 tracking-tight">Apex<span className="text-amber-400">Business</span></h2>
+                            <p className="text-slate-400 text-lg">Entrance to your future.</p>
                         </div>
 
                         <div className="relative z-10 mt-12 md:mt-0">
                             <div className="p-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 mb-4">
-                                <p className="text-sm italic text-slate-300">"Най-добрият начин да предвидиш бъдещето е да го създадеш."</p>
+                                <p className="text-sm italic text-slate-300">"The best way to predict the future is to create it."</p>
                             </div>
                         </div>
                     </div>
@@ -107,14 +107,14 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                 onClick={() => { setAuthMode('login'); setStep(1); setError(''); }}
                                 className={`pb-2 text-lg font-bold transition-colors ${authMode === 'login' ? 'text-white border-b-2 border-amber-400' : 'text-slate-500 hover:text-slate-300'}`}
                             >
-                                Вход
+                                Login
                             </button>
                             <button
                                 type="button"
                                 onClick={() => { setAuthMode('signup'); setStep(1); setError(''); }}
                                 className={`pb-2 text-lg font-bold transition-colors ${authMode === 'signup' ? 'text-white border-b-2 border-amber-400' : 'text-slate-500 hover:text-slate-300'}`}
                             >
-                                Регистрация
+                                Register
                             </button>
                         </div>
 
@@ -128,7 +128,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                             {authMode === 'login' ? (
                                 <div className="space-y-6 animate-fadeIn">
                                     <div>
-                                        <label className="block text-sm font-bold text-slate-300 mb-2">Имейл</label>
+                                        <label className="block text-sm font-bold text-slate-300 mb-2">Email</label>
                                         <div className="relative">
                                             <Mail className="absolute left-4 top-3.5 text-slate-500" size={20} />
                                             <input
@@ -142,7 +142,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-slate-300 mb-2">Парола</label>
+                                        <label className="block text-sm font-bold text-slate-300 mb-2">Password</label>
                                         <div className="relative">
                                             <Lock className="absolute left-4 top-3.5 text-slate-500" size={20} />
                                             <input
@@ -159,17 +159,17 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                         disabled={isLoading}
                                         className="w-full bg-amber-400 text-black py-4 rounded-xl font-bold hover:bg-amber-500 transition shadow-xl mt-4 disabled:opacity-50"
                                     >
-                                        {isLoading ? 'Зареждане...' : 'Влез'}
+                                        {isLoading ? 'Loading...' : 'Login'}
                                     </button>
                                 </div>
                             ) : (
                                 <>
                                     {step === 1 && (
                                         <div className="space-y-6 animate-fadeIn">
-                                            <h3 className="text-xl font-bold text-white">Лична Информация</h3>
+                                            <h3 className="text-xl font-bold text-white">Personal Information</h3>
 
                                             <div>
-                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Вашето Име</label>
+                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Your Name</label>
                                                 <div className="relative group">
                                                     <User className="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-amber-400 transition-colors" size={20} />
                                                     <input
@@ -179,13 +179,13 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                                         value={formData.name}
                                                         onChange={handleChange}
                                                         className="w-full pl-12 pr-4 py-3 border border-slate-700 rounded-xl focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 outline-none transition-all text-white font-medium bg-slate-950 placeholder-slate-600"
-                                                        placeholder="Иван Иванов"
+                                                        placeholder="John Doe"
                                                     />
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Имейл Адрес</label>
+                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Email Address</label>
                                                 <div className="relative group">
                                                     <Mail className="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-amber-400 transition-colors" size={20} />
                                                     <input
@@ -201,7 +201,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Парола</label>
+                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Password</label>
                                                 <div className="relative group">
                                                     <Lock className="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-amber-400 transition-colors" size={20} />
                                                     <input
@@ -220,7 +220,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                                     onClick={handleNext}
                                                     className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-bold transition-all flex items-center gap-2 hover:gap-3"
                                                 >
-                                                    Напред <ChevronRight size={20} className="text-amber-400" />
+                                                    Next <ChevronRight size={20} className="text-amber-400" />
                                                 </button>
                                             </div>
                                         </div>
@@ -229,12 +229,12 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                     {step === 2 && (
                                         <div className="space-y-6 animate-fadeIn">
                                             <div>
-                                                <h3 className="text-xl font-bold text-white mb-1">За Бизнеса</h3>
-                                                <p className="text-xs text-slate-500">Колкото по-детайлно, толкова по-точен анализ.</p>
+                                                <h3 className="text-xl font-bold text-white mb-1">About Business</h3>
+                                                <p className="text-xs text-slate-500">The more detailed, the more accurate the analysis.</p>
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Опишете идеята си (Детайлно)</label>
+                                                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wide">Describe your idea (Detailed)</label>
                                                 <textarea
                                                     required
                                                     name="businessIdea"
@@ -242,13 +242,13 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                                     onChange={handleChange}
                                                     rows={4}
                                                     className="w-full p-4 border border-slate-700 rounded-xl focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 outline-none transition-all text-white font-medium resize-none text-sm bg-slate-950 placeholder-slate-600"
-                                                    placeholder="Моля, опишете продукта/услугата, целевата група, и как планирате да печелите..."
+                                                    placeholder="Please describe the product/service, target audience, and how you plan to make money..."
                                                 />
                                             </div>
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Капитал (BGN)</label>
+                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Capital (BGN)</label>
                                                     <div className="relative">
                                                         <DollarSign className="absolute left-3 top-3 text-amber-500" size={16} />
                                                         <input
@@ -264,7 +264,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                                 </div>
 
                                                 <div>
-                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Екип (брой)</label>
+                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Team (Count)</label>
                                                     <div className="relative">
                                                         <Users className="absolute left-3 top-3 text-slate-500" size={16} />
                                                         <input
@@ -282,7 +282,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Локация</label>
+                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Location</label>
                                                     <input
                                                         required
                                                         name="location"
@@ -290,20 +290,20 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                                         value={formData.location}
                                                         onChange={handleChange}
                                                         className="w-full px-4 py-2.5 border border-slate-700 rounded-xl focus:border-amber-400 outline-none text-sm bg-slate-950 text-white"
-                                                        placeholder="София"
+                                                        placeholder="Sofia"
                                                     />
                                                 </div>
                                                 <div>
-                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Опит</label>
+                                                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Experience</label>
                                                     <select
                                                         name="experience"
                                                         value={formData.experience}
                                                         onChange={handleChange}
                                                         className="w-full px-4 py-2.5 border border-slate-700 rounded-xl focus:border-amber-400 outline-none text-sm bg-slate-950 text-white"
                                                     >
-                                                        <option value="Начинаещ">Начинаещ</option>
-                                                        <option value="Средно ниво">Средно ниво</option>
-                                                        <option value="Експерт">Експерт</option>
+                                                        <option value="Beginner">Beginner</option>
+                                                        <option value="Intermediate">Intermediate</option>
+                                                        <option value="Expert">Expert</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -314,13 +314,13 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
                                                     onClick={handlePrev}
                                                     className="text-slate-400 hover:text-white font-bold px-4 py-2 flex items-center gap-1 transition-colors text-sm"
                                                 >
-                                                    <ChevronLeft size={16} /> Назад
+                                                    <ChevronLeft size={16} /> Back
                                                 </button>
                                                 <button
                                                     type="submit"
                                                     className="bg-amber-400 hover:bg-amber-500 text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 hover:scale-105 shadow-xl shadow-amber-400/20 text-sm"
                                                 >
-                                                    Създай Акаунт
+                                                    Create Account
                                                     <Rocket size={16} />
                                                 </button>
                                             </div>
@@ -334,7 +334,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete, onBack }) => {
             </div>
 
             <footer className="py-6 text-center text-slate-500 text-sm">
-                <p>&copy; 2024 BizAI. Всички права запазени. | <a href="#" className="hover:text-amber-400">Условия</a> | <a href="#" className="hover:text-amber-400">Поверителност</a></p>
+                <p>&copy; 2024 ApexBusiness. All rights reserved. | <a href="#" className="hover:text-amber-400">Terms</a> | <a href="#" className="hover:text-amber-400">Privacy</a></p>
             </footer>
         </div>
     );

@@ -20,14 +20,27 @@ const App: React.FC = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Check for existing token on mount
+  // Check for existing token and settings on mount
   React.useEffect(() => {
     const checkAuth = async () => {
       const { api } = await import('./services/api');
-      const profile = await api.getProfile();
+      const [profile, settings] = await Promise.all([
+        api.getProfile(),
+        api.getSettings() // Fetch settings in parallel
+      ]);
+
       if (profile) {
         setUserProfile(profile);
         setCurrentView('dashboard');
+      }
+
+      // Apply saved theme
+      if (settings) {
+        if (settings.darkMode) {
+          document.body.classList.remove('light-mode');
+        } else {
+          document.body.classList.add('light-mode');
+        }
       }
     };
     checkAuth();
@@ -44,7 +57,8 @@ const App: React.FC = () => {
     setActiveSection(Section.DASHBOARD);
     setCurrentView('landing');
   };
-  const mainContainerClasses = "min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black font-sans overflow-x-hidden";
+  // Removed strict background to allow body background to show
+  const mainContainerClasses = "min-h-screen font-sans overflow-x-hidden text-slate-200";
 
   if (currentView === 'landing') {
     return (
@@ -64,14 +78,8 @@ const App: React.FC = () => {
 
   if (currentView === 'dashboard' && userProfile) {
     return (
-      <div className={`${mainContainerClasses} flex overflow-hidden`}>
-        {/* Mobile Overlay */}
-        {isSidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-20 lg:hidden"
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
+      <div className={`${mainContainerClasses} flex`}>
+        {/* Mobile Overlay is handled in Sidebar now */}
 
         {/* Sidebar */}
         <Sidebar
@@ -88,10 +96,11 @@ const App: React.FC = () => {
 
         {/* Main Content */}
         <main
-          className={`flex-1 h-screen overflow-y-auto transition-all duration-300 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'ml-0'
+          className={`flex-1 min-h-screen transition-all duration-300 ease-out ${isSidebarOpen ? 'lg:ml-72' : 'ml-0'
             }`}
         >
-          <div className="sticky top-0 z-10 bg-slate-900/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex items-center gap-4">
+          {/* Mobile Header - Glass Effect */}
+          <div className="lg:hidden sticky top-0 z-20 glass-panel border-b border-white/10 px-6 py-4 flex items-center gap-4 m-4 rounded-xl mt-4">
             <button
               onClick={toggleSidebar}
               className="p-2 hover:bg-white/5 text-slate-300 hover:text-amber-400 rounded-lg transition-colors"
@@ -99,13 +108,14 @@ const App: React.FC = () => {
               <Menu size={24} />
             </button>
             <h1 className="text-xl font-bold text-white tracking-tight">
-              Biz<span className="text-amber-400">AI</span>
+              Apex<span className="text-amber-400">Business</span>
             </h1>
           </div>
 
           <Dashboard
             activeSection={activeSection}
             userProfile={userProfile}
+            onLogout={handleLogout}
           />
         </main>
       </div>

@@ -67,4 +67,35 @@ router.post('/profile', authenticateToken, async (req: any, res) => {
     }
 });
 
+// Get Settings
+router.get('/settings', authenticateToken, async (req: any, res) => {
+    try {
+        const settings = await prisma.settings.findUnique({
+            where: { userId: req.user.userId }
+        });
+        // Return defaults if no settings found
+        res.json(settings || { darkMode: true, notifications: true, publicProfile: false, twoFactor: false });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch settings' });
+    }
+});
+
+// Update Settings
+router.post('/settings', authenticateToken, async (req: any, res) => {
+    try {
+        const { darkMode, notifications, publicProfile, twoFactor } = req.body;
+        const userId = req.user.userId;
+
+        const settings = await prisma.settings.upsert({
+            where: { userId },
+            update: { darkMode, notifications, publicProfile, twoFactor },
+            create: { userId, darkMode, notifications, publicProfile, twoFactor }
+        });
+
+        res.json(settings);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to save settings' });
+    }
+});
+
 export default router;

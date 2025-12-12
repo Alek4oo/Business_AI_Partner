@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-surface: rgba(15, 23, 42, 0.4);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --neon-amber: #fbbf24;
+  --neon-glow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+/* Light Mode Overrides */
+body.light-mode {
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-surface: rgba(255, 255, 255, 0.6);
+  --glass-highlight: rgba(0, 0, 0, 0.05);
+  background-color: #f1f5f9;
+  /* Slate 100 */
+  color: #0f172a;
+  /* Slate 900 */
+}
+
+/* Override background image for light mode to remove the dark overlay */
+body.light-mode {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+    url('/background.png');
+}
+
+body {
+  background-color: #020617;
+  /* Slate 950 */
+  color: #e2e8f0;
+  /* Slate 200 */
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  /* Overlay + Background Image */
+  background-image:
+    url('/background.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  /* Increased blur */
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.3), rgba(15, 23, 42, 0.3));
+  /* Reduced opacity */
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+  transform: translateY(-2px);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 191, 36, 0.4);
+}
+
+/* Animations */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(251, 191, 36, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+  }
+}
+
+.animate-glow {
+  animation: glow-pulse 3s infinite;
+}
+
+/* Background Grid Pattern */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
