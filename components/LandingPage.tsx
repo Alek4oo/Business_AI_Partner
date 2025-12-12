@@ -397,18 +397,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-black text-slate-500 py-12 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <footer className="bg-black text-slate-500 py-8 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
 
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <div className="text-2xl font-bold text-white mb-4">
+            <div className="text-xl font-bold text-white mb-2">
               Apex<span className="text-amber-400">Business</span>
             </div>
-            <p className="text-sm leading-relaxed mb-6">
-              Your intelligent partner for business success. From idea to realization.
+            <p className="text-xs leading-relaxed mb-4">
+              Your intelligent partner for business success.
             </p>
-            <div className="flex gap-4 text-slate-400">
+            <div className="flex gap-3 text-slate-400">
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Twitter size={20} /></a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Facebook size={20} /></a>
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Linkedin size={20} /></a>
@@ -418,8 +418,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
 
           {/* Links 1 */}
           <div>
-            <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Product</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-wider">Product</h4>
+            <ul className="space-y-1 text-xs">
               <li><button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-amber-400 transition text-left">Features</button></li>
               <li><button onClick={() => setActiveModal('pricing')} className="hover:text-amber-400 transition text-left">Pricing</button></li>
               <li><button onClick={() => setActiveModal('teams')} className="hover:text-amber-400 transition text-left">For Teams</button></li>
@@ -429,8 +429,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
 
           {/* Links 2 */}
           <div>
-            <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Company</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-wider">Company</h4>
+            <ul className="space-y-1 text-xs">
               <li><button onClick={() => setActiveModal('about')} className="hover:text-amber-400 transition text-left">About Us</button></li>
               <li><button onClick={() => setActiveModal('careers')} className="hover:text-amber-400 transition text-left">Careers</button></li>
               <li><button onClick={() => setActiveModal('contact')} className="hover:text-amber-400 transition text-left">Contacts</button></li>
@@ -440,8 +440,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
 
           {/* Links 3 */}
           <div>
-            <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Legal</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-wider">Legal</h4>
+            <ul className="space-y-1 text-xs">
               <li><button onClick={() => setActiveModal('terms')} className="hover:text-amber-400 transition text-left">Terms of Service</button></li>
               <li><button onClick={() => setActiveModal('privacy')} className="hover:text-amber-400 transition text-left">Privacy Policy</button></li>
               <li><button onClick={() => setActiveModal('cookies')} className="hover:text-amber-400 transition text-left">Cookies</button></li>
@@ -449,9 +449,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm">
-          <p>&copy; 2024 ApexBusiness Inc. All rights reserved.</p>
-          <p className="mt-2 md:mt-0">Made with ❤️ in Bulgaria</p>
+        <div className="max-w-7xl mx-auto px-6 mt-6 pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs">
+          <p>&copy; 2026 ApexBusiness Inc. All rights reserved.</p>
+          <p className="mt-1 md:mt-0">Made with ❤️ in Bulgaria</p>
         </div>
       </footer>
 
