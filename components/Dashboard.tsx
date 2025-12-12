@@ -35,6 +35,7 @@ import {
 
 import ProfileSettings from './ProfileSettings';
 import SettingsModal from './SettingsModal';
+import ActionBar from './ActionBar';
 
 interface DashboardProps {
     activeSection: Section;
@@ -604,7 +605,7 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
 
         // Default Fallback (Text Sections)
         return (
-            <div className="glass-panel p-8 md:p-10 rounded-2xl relative backdrop-blur-md mb-20 animate-fadeIn">
+            <div id="report-content" className="glass-panel p-8 md:p-10 rounded-2xl relative backdrop-blur-md mb-20 animate-fadeIn">
                 <div className="flex justify-between items-start mb-8 border-b border-white/5 pb-6">
                     <div className="flex items-center gap-5">
                         <div className="p-4 bg-gradient-to-br from-slate-800 to-slate-900 text-amber-400 rounded-2xl shadow-lg border border-white/5">
@@ -629,13 +630,19 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                         </div>
                     </div>
 
-                    <button
-                        onClick={() => fetchDataForSection(activeSection)}
-                        className="text-slate-400 hover:text-amber-400 transition p-3 hover:bg-white/5 rounded-xl group border border-transparent hover:border-white/5"
-                        title="Regenerate"
-                    >
-                        <RefreshCw size={22} className="group-hover:rotate-180 transition-transform duration-700" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <ActionBar
+                            sectionId="report-content"
+                            sectionName={activeSection.replace('_', '-').toLowerCase()}
+                        />
+                        <button
+                            onClick={() => fetchDataForSection(activeSection)}
+                            className="text-slate-400 hover:text-amber-400 transition p-3 hover:bg-white/5 rounded-xl group border border-transparent hover:border-white/5"
+                            title="Regenerate"
+                        >
+                            <RefreshCw size={22} className="group-hover:rotate-180 transition-transform duration-700" />
+                        </button>
+                    </div>
                 </div>
                 <div className="prose prose-lg prose-invert max-w-none prose-headings:text-white prose-a:text-amber-400 text-slate-300 leading-relaxed">
                     {renderContent(sectionData as string)}
