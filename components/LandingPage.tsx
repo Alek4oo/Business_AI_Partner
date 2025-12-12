@@ -1,11 +1,212 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TrendingUp, Scale, BarChart3, ChevronRight, Twitter, Facebook, Linkedin, Instagram, CheckCircle, Zap, Globe, Shield, ArrowRight } from 'lucide-react';
+import InfoModal from './InfoModal';
 
 interface LandingPageProps {
   onStart: () => void;
 }
 
+type ModalType = 'terms' | 'privacy' | 'cookies' | 'about' | 'careers' | 'contact' | 'pricing' | 'teams' | 'enterprise' | 'blog' | null;
+
 const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
+
+  const modalContent: Record<Exclude<ModalType, null>, { title: string; content: React.ReactNode }> = {
+    terms: {
+      title: 'Terms of Service',
+      content: (
+        <div className="space-y-4">
+          <p><strong>Last Updated:</strong> December 2024</p>
+          <h3 className="text-lg font-bold text-amber-400">1. Acceptance of Terms</h3>
+          <p>By accessing and using ApexBusiness, you agree to be bound by these Terms of Service and all applicable laws and regulations.</p>
+          <h3 className="text-lg font-bold text-amber-400">2. Use License</h3>
+          <p>Permission is granted to temporarily use ApexBusiness for personal, non-commercial transitory viewing only. This license does not include modifying or copying materials, using materials for commercial purposes, or attempting to reverse engineer any software.</p>
+          <h3 className="text-lg font-bold text-amber-400">3. Disclaimer</h3>
+          <p>The materials on ApexBusiness are provided on an 'as is' basis. ApexBusiness makes no warranties, expressed or implied, and hereby disclaims all warranties including merchantability and fitness for a particular purpose.</p>
+          <h3 className="text-lg font-bold text-amber-400">4. Limitations</h3>
+          <p>ApexBusiness shall not be held liable for any damages arising from the use or inability to use our materials.</p>
+        </div>
+      )
+    },
+    privacy: {
+      title: 'Privacy Policy',
+      content: (
+        <div className="space-y-4">
+          <p><strong>Last Updated:</strong> December 2024</p>
+          <h3 className="text-lg font-bold text-amber-400">Information We Collect</h3>
+          <p>We collect information you provide directly, such as your name, email, and business information when you create an account.</p>
+          <h3 className="text-lg font-bold text-amber-400">How We Use Your Information</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>To provide and improve our AI business analysis services</li>
+            <li>To personalize your experience</li>
+            <li>To communicate with you about updates and features</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">Data Security</h3>
+          <p>Your data is encrypted using industry-standard protocols. We never sell your personal information to third parties.</p>
+          <h3 className="text-lg font-bold text-amber-400">Your Rights</h3>
+          <p>You can request access, correction, or deletion of your data at any time by contacting support@apexbusiness.ai</p>
+        </div>
+      )
+    },
+    cookies: {
+      title: 'Cookie Policy',
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-lg font-bold text-amber-400">What Are Cookies?</h3>
+          <p>Cookies are small text files stored on your device that help us provide a better experience.</p>
+          <h3 className="text-lg font-bold text-amber-400">Cookies We Use</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Essential Cookies:</strong> Required for the platform to function properly</li>
+            <li><strong>Analytics Cookies:</strong> Help us understand how you use our service</li>
+            <li><strong>Preference Cookies:</strong> Remember your settings (like dark mode)</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">Managing Cookies</h3>
+          <p>You can control cookies through your browser settings. Disabling essential cookies may affect functionality.</p>
+        </div>
+      )
+    },
+    about: {
+      title: 'About ApexBusiness',
+      content: (
+        <div className="space-y-4">
+          <p className="text-xl text-amber-400 font-semibold">Empowering Entrepreneurs with AI</p>
+          <p>Founded in 2024, ApexBusiness is an AI-powered business intelligence platform designed to transform how entrepreneurs launch and grow their ventures.</p>
+          <h3 className="text-lg font-bold text-amber-400">Our Mission</h3>
+          <p>To democratize business intelligence by making professional-grade market analysis, financial forecasting, and strategic planning accessible to everyone.</p>
+          <h3 className="text-lg font-bold text-amber-400">What We Offer</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>AI-powered idea validation</li>
+            <li>Comprehensive market analysis</li>
+            <li>Financial forecasting and budgeting</li>
+            <li>Legal compliance checking</li>
+            <li>Marketing strategy generation</li>
+            <li>Interactive roadmap planning</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">Our Technology</h3>
+          <p>Powered by Google's Gemini 2.5 Flash, our AI provides real-time analysis and personalized recommendations for your business.</p>
+        </div>
+      )
+    },
+    careers: {
+      title: 'Careers at ApexBusiness',
+      content: (
+        <div className="space-y-4">
+          <p className="text-xl text-amber-400 font-semibold">Join Our Team!</p>
+          <p>We're always looking for talented individuals passionate about AI and entrepreneurship.</p>
+          <h3 className="text-lg font-bold text-amber-400">Open Positions</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Full-Stack Developer</strong> - React, Node.js, TypeScript</li>
+            <li><strong>AI/ML Engineer</strong> - LLM integration, prompt engineering</li>
+            <li><strong>UX Designer</strong> - Creating beautiful, intuitive interfaces</li>
+            <li><strong>Business Analyst</strong> - Market research, product strategy</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">How to Apply</h3>
+          <p>Send your resume and portfolio to: <span className="text-amber-400">careers@apexbusiness.ai</span></p>
+        </div>
+      )
+    },
+    contact: {
+      title: 'Contact Us',
+      content: (
+        <div className="space-y-4">
+          <p className="text-xl text-amber-400 font-semibold">We'd Love to Hear From You!</p>
+          <h3 className="text-lg font-bold text-amber-400">General Inquiries</h3>
+          <p>Email: <span className="text-amber-400">hello@apexbusiness.ai</span></p>
+          <h3 className="text-lg font-bold text-amber-400">Technical Support</h3>
+          <p>Email: <span className="text-amber-400">support@apexbusiness.ai</span></p>
+          <h3 className="text-lg font-bold text-amber-400">Business & Partnerships</h3>
+          <p>Email: <span className="text-amber-400">partners@apexbusiness.ai</span></p>
+          <h3 className="text-lg font-bold text-amber-400">Office</h3>
+          <p>Sofia, Bulgaria 🇧🇬</p>
+          <p className="text-sm text-slate-500 mt-4">Response time: Within 24 hours</p>
+        </div>
+      )
+    },
+    pricing: {
+      title: 'Pricing Plans',
+      content: (
+        <div className="space-y-4">
+          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-6">
+            <p className="text-emerald-400 font-bold text-lg">🎉 Currently FREE during Beta!</p>
+            <p className="text-slate-400 text-sm">Get full access to all features while we're in beta.</p>
+          </div>
+          <h3 className="text-lg font-bold text-amber-400">Coming Soon: Premium Plans</h3>
+          <div className="grid gap-4">
+            <div className="bg-slate-800/50 p-4 rounded-lg border border-white/10">
+              <p className="font-bold text-white">Starter - $19/mo</p>
+              <p className="text-sm text-slate-400">Basic AI analysis, 5 reports/month</p>
+            </div>
+            <div className="bg-slate-800/50 p-4 rounded-lg border border-amber-400/30">
+              <p className="font-bold text-amber-400">Pro - $49/mo</p>
+              <p className="text-sm text-slate-400">Unlimited reports, priority AI, export to PDF</p>
+            </div>
+            <div className="bg-slate-800/50 p-4 rounded-lg border border-white/10">
+              <p className="font-bold text-white">Enterprise - Custom</p>
+              <p className="text-sm text-slate-400">Team features, API access, dedicated support</p>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    teams: {
+      title: 'ApexBusiness for Teams',
+      content: (
+        <div className="space-y-4">
+          <p className="text-xl text-amber-400 font-semibold">Empower Your Entire Team</p>
+          <p>Coming soon: Collaborative features for startups and small businesses.</p>
+          <h3 className="text-lg font-bold text-amber-400">Team Features</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Shared workspace for all team members</li>
+            <li>Collaborative business plan editing</li>
+            <li>Role-based access controls</li>
+            <li>Team analytics and insights</li>
+            <li>Centralized billing</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">Early Access</h3>
+          <p>Want early access to team features? Contact us at <span className="text-amber-400">teams@apexbusiness.ai</span></p>
+        </div>
+      )
+    },
+    enterprise: {
+      title: 'Enterprise Solutions',
+      content: (
+        <div className="space-y-4">
+          <p className="text-xl text-amber-400 font-semibold">Built for Scale</p>
+          <p>Custom AI solutions for larger organizations and accelerators.</p>
+          <h3 className="text-lg font-bold text-amber-400">Enterprise Features</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Custom AI model training on your data</li>
+            <li>White-label solutions</li>
+            <li>API access for integration</li>
+            <li>Dedicated account manager</li>
+            <li>SLA guarantees</li>
+            <li>On-premise deployment options</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">Contact Sales</h3>
+          <p>Email: <span className="text-amber-400">enterprise@apexbusiness.ai</span></p>
+        </div>
+      )
+    },
+    blog: {
+      title: 'ApexBusiness Blog',
+      content: (
+        <div className="space-y-4">
+          <p className="text-xl text-amber-400 font-semibold">Coming Soon!</p>
+          <p>Our blog will feature:</p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>AI-powered business insights</li>
+            <li>Startup success stories</li>
+            <li>Market trend analysis</li>
+            <li>Tips for entrepreneurs</li>
+            <li>Product updates and tutorials</li>
+          </ul>
+          <h3 className="text-lg font-bold text-amber-400">Stay Updated</h3>
+          <p>Subscribe to our newsletter to be notified when we launch the blog!</p>
+        </div>
+      )
+    }
+  };
+
   return (
     <div className="min-h-screen font-sans flex flex-col">
       {/* Navbar */}
@@ -208,10 +409,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
               Your intelligent partner for business success. From idea to realization.
             </p>
             <div className="flex gap-4 text-slate-400">
-              <a href="#" className="hover:text-amber-400 transition"><Twitter size={20} /></a>
-              <a href="#" className="hover:text-amber-400 transition"><Facebook size={20} /></a>
-              <a href="#" className="hover:text-amber-400 transition"><Linkedin size={20} /></a>
-              <a href="#" className="hover:text-amber-400 transition"><Instagram size={20} /></a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Twitter size={20} /></a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Facebook size={20} /></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Linkedin size={20} /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition"><Instagram size={20} /></a>
             </div>
           </div>
 
@@ -219,10 +420,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
           <div>
             <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Product</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-amber-400 transition">Features</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Pricing</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">For Teams</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Enterprise</a></li>
+              <li><button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-amber-400 transition text-left">Features</button></li>
+              <li><button onClick={() => setActiveModal('pricing')} className="hover:text-amber-400 transition text-left">Pricing</button></li>
+              <li><button onClick={() => setActiveModal('teams')} className="hover:text-amber-400 transition text-left">For Teams</button></li>
+              <li><button onClick={() => setActiveModal('enterprise')} className="hover:text-amber-400 transition text-left">Enterprise</button></li>
             </ul>
           </div>
 
@@ -230,10 +431,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
           <div>
             <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Company</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-amber-400 transition">About Us</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Careers</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Contacts</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Blog</a></li>
+              <li><button onClick={() => setActiveModal('about')} className="hover:text-amber-400 transition text-left">About Us</button></li>
+              <li><button onClick={() => setActiveModal('careers')} className="hover:text-amber-400 transition text-left">Careers</button></li>
+              <li><button onClick={() => setActiveModal('contact')} className="hover:text-amber-400 transition text-left">Contacts</button></li>
+              <li><button onClick={() => setActiveModal('blog')} className="hover:text-amber-400 transition text-left">Blog</button></li>
             </ul>
           </div>
 
@@ -241,9 +442,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
           <div>
             <h4 className="text-white font-bold mb-4 uppercase text-sm tracking-wider">Legal</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-amber-400 transition">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">Cookies</a></li>
+              <li><button onClick={() => setActiveModal('terms')} className="hover:text-amber-400 transition text-left">Terms of Service</button></li>
+              <li><button onClick={() => setActiveModal('privacy')} className="hover:text-amber-400 transition text-left">Privacy Policy</button></li>
+              <li><button onClick={() => setActiveModal('cookies')} className="hover:text-amber-400 transition text-left">Cookies</button></li>
             </ul>
           </div>
         </div>
@@ -253,6 +454,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
           <p className="mt-2 md:mt-0">Made with ❤️ in Bulgaria</p>
         </div>
       </footer>
+
+      {/* Modals */}
+      {activeModal && (
+        <InfoModal
+          title={modalContent[activeModal].title}
+          onClose={() => setActiveModal(null)}
+        >
+          {modalContent[activeModal].content}
+        </InfoModal>
+      )}
     </div>
   );
 };
