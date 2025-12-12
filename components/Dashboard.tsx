@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Section, UserProfile, FinancialDataPoint, RisksAndRoadmapData, RoadmapTask, ChatMessage } from '../types';
+import { Section, UserProfile, FinancialDataPoint, RisksAndRoadmapData, RoadmapTask, ChatMessage, ChatSession } from '../types';
 import * as GeminiService from '../services/geminiService';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -36,6 +36,8 @@ import {
 import ProfileSettings from './ProfileSettings';
 import SettingsModal from './SettingsModal';
 import ActionBar from './ActionBar';
+import ChatHistoryPanel from './ChatHistoryPanel';
+import { saveChatSession, createNewSession, updateSessionTitle } from '../utils/chatStorage';
 
 interface DashboardProps {
     activeSection: Section;
@@ -75,6 +77,10 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
     const [chatInput, setChatInput] = useState('');
     const [isChatLoading, setIsChatLoading] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
+
+    // Chat Session State
+    const [currentSession, setCurrentSession] = useState<ChatSession>(() => createNewSession());
+    const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
     // Roadmap State (Local persistence simulation)
     const [roadmapTasks, setRoadmapTasks] = useState<RoadmapTask[]>([]);
@@ -143,12 +149,30 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
         try {
             const responseText = await GeminiService.sendMentorMessage(userProfile, chatHistory, userMsg.text);
             const aiMsg: ChatMessage = { role: 'model', text: responseText };
-            setChatHistory(prev => [...prev, aiMsg]);
+            setChatHistory(prev => {
+                const newHistory = [...prev, aiMsg];
+                // Save session after AI responds
+                const updatedSession = updateSessionTitle({ ...currentSession, messages: newHistory });
+                setCurrentSession(updatedSession);
+                saveChatSession(updatedSession);
+                return newHistory;
+            });
         } catch (e) {
             console.error(e);
         } finally {
             setIsChatLoading(false);
         }
+    };
+
+    const handleNewChat = () => {
+        const newSession = createNewSession();
+        setCurrentSession(newSession);
+        setChatHistory([]);
+    };
+
+    const handleLoadSession = (session: ChatSession) => {
+        setCurrentSession(session);
+        setChatHistory(session.messages);
     };
 
     const toggleTask = (taskId: number) => {
@@ -330,13 +354,21 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                         <div className="bg-amber-400/20 p-2 rounded-lg border border-amber-400/30">
                             <MessageCircle size={20} className="text-amber-400" />
                         </div>
-                        <div>
+                        <div className="flex-1">
                             <h3 className="text-white font-bold tracking-wide">AI Business Mentor</h3>
                             <p className="text-slate-400 text-xs flex items-center gap-1.5">
                                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
                                 Online
                             </p>
                         </div>
+                        <button
+                            onClick={() => setIsHistoryOpen(true)}
+                            className="px-3 py-2 bg-slate-800/50 hover:bg-slate-700/50 border border-white/10 rounded-lg text-sm text-slate-300 hover:text-white transition-all flex items-center gap-2"
+                            title="Chat History"
+                        >
+                            <MessageCircle size={16} />
+                            <span className="hidden md:inline">History</span>
+                        </button>
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-hide">
@@ -726,6 +758,15 @@ const Dashboard: React.FC<DashboardProps> = ({ activeSection, userProfile, onLog
                     onClose={() => setActiveModal(null)}
                 />
             )}
+
+            {/* Chat History Panel */}
+            <ChatHistoryPanel
+                isOpen={isHistoryOpen}
+                onClose={() => setIsHistoryOpen(false)}
+                onSelectSession={handleLoadSession}
+                onNewChat={handleNewChat}
+                currentSessionId={currentSession.id}
+            />
         </div>
     );
 };

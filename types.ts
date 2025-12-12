@@ -44,3 +44,11 @@ export interface RisksAndRoadmapData {
   risks: { title: string; mitigation: string }[];
   roadmap: RoadmapTask[];
 }
+
+export interface ChatSession {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  messages: ChatMessage[];
+}
